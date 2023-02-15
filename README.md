@@ -1,4 +1,4 @@
-Interfaz que simula la carga de productos en una base de datos(MySQL), unciona utilizando una Api a base de Spring e Hibernate.
+Interfaz que simula la carga de productos en una base de datos(MySQL), funciona utilizando una Api a base de Spring e Hibernate.
 La interfaz envía los datos a la Api y esta lo carga a la base de datos.
 
 Pasos para su funcionamiento
@@ -13,3 +13,10 @@ Pasos para su funcionamiento
 - User Name: test
 - Password: test
 ACLARACION * Estos datos pueden ser modificados al crear el contenedor en docker *
+
+
+Mejoras por implementar
+Formatos de campos para que variables como la fecha se envíen de la manera correcta a la Api.
+Autenticación de usuario.
+Mejorar el manejo de errores
+Documentación
