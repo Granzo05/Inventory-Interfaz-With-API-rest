@@ -12,7 +12,7 @@ Pasos para su funcionamiento
 - JBDC URL: jdbc:mysql://localhost:3306/Inventory
 - User Name: test
 - Password: test
-ACLARACION * Estos datos pueden ser modificados al crear el contenedor en docker *
+- ACLARACION * Estos datos pueden ser modificados al crear el contenedor en docker *
 
 
 Mejoras por implementar
