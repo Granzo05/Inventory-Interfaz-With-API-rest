@@ -16,7 +16,7 @@ ACLARACION * Estos datos pueden ser modificados al crear el contenedor en docker
 
 
 Mejoras por implementar
--Formatos de campos para que variables como la fecha se envíen de la manera correcta a la Api.
--Autenticación de usuario.
--Mejorar el manejo de errores
--Documentación
+- Formatos de campos para que variables como la fecha se envíen de la manera correcta a la Api.
+- Autenticación de usuario.
+- Mejorar el manejo de errores
+- Documentación
