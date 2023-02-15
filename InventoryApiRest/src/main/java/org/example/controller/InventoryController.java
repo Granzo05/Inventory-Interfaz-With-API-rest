@@ -1,6 +1,6 @@
 package org.example.controller;
 
-import org.example.entities.Product;
+import org.example.entities.Products;
 import org.example.repository.ProductRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,42 +8,45 @@ import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
 public class InventoryController {
-    ArrayList<Product> products = new ArrayList();
+    ArrayList<Products> products = new ArrayList();
     private final ProductRepository productRepository;
 
     public InventoryController(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
-    @GetMapping("/product")
-    public List<Product> getProducts() {
-        return productRepository.findAll();
+    @GetMapping("/product/{code}")
+    public ResponseEntity<?> getProducts(@PathVariable String code) {
+        Optional<Products> product = productRepository.findByCode(code);
+        if (!product.isPresent()) {
+            return new ResponseEntity<>("Products doesn't exist", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(product.get(), HttpStatus.OK);
     }
 
     @PostMapping("/product")
-    public ResponseEntity<String> createProduct(@RequestBody Product productDetails){
-        Optional<Product> product = productRepository.findByCode(productDetails.getCode());
+    public ResponseEntity<String> createProducts(@RequestBody Products productDetails){
+        Optional<Products> product = productRepository.findByCode(productDetails.getCode());
         if(!product.isPresent()){
             productRepository.save(productDetails);
-            System.out.println("Product received: " + productDetails);
-            return new ResponseEntity<>("Product loaded", HttpStatus.CREATED);
+            System.out.println("Products received: " + productDetails);
+            return new ResponseEntity<>("Products loaded", HttpStatus.CREATED);
         }else{
             return new ResponseEntity<>("This product already exist", HttpStatus.BAD_REQUEST);
         }
     }
 
     @PutMapping("/product/{code}")
-    public ResponseEntity<Product> updateProduct(@PathVariable String code,@RequestBody Product productDetails) {
-        Optional<Product> productOptional = productRepository.findByCode(code);
+    public ResponseEntity<Products> updateProducts(@PathVariable String code, @RequestBody Products productDetails) {
+        Optional<Products> productOptional = productRepository.findByCode(productDetails.getCode());
         if (!productOptional.isPresent()) {
             return ResponseEntity.notFound().build();
         }
-        Product product = productOptional.get();
+        Products product = productOptional.get();
         Class<?> productClass = product.getClass();
         Class<?> productDetailsClass = productDetails.getClass();
 
@@ -61,14 +64,14 @@ public class InventoryController {
                 System.out.println("Error: " + e.getClass());
             }
         }
-        Product savedProduct = productRepository.save(product);
-        return ResponseEntity.ok(savedProduct);
+        Products savedProducts = productRepository.save(product);
+        return ResponseEntity.ok(savedProducts);
     }
     @DeleteMapping("/product/{code}")
-    public ResponseEntity<?> deleteProduct(@PathVariable String code) {
-        Optional<Product> product = productRepository.findByCode(code);
+    public ResponseEntity<?> deleteProducts(@PathVariable String code) {
+        Optional<Products> product = productRepository.findByCode(code);
         if (!product.isPresent()) {
-            return new ResponseEntity<>("Product doesn't exist", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Products doesn't exist", HttpStatus.BAD_REQUEST);
         }
         productRepository.delete(product.get());
         return new ResponseEntity<>("The product has delete", HttpStatus.ACCEPTED);
