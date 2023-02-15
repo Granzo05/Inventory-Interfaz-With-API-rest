@@ -1,5 +1,4 @@
-Interfaz que simula la carga de productos en una base de datos(MySQL)
-Funciona utilizando una Api a base de Spring e Hibernate
+Interfaz que simula la carga de productos en una base de datos(MySQL), unciona utilizando una Api a base de Spring e Hibernate.
 La interfaz envía los datos a la Api y esta lo carga a la base de datos.
 
 Pasos para su funcionamiento
